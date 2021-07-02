@@ -1,0 +1,35 @@
+.header {
+    display:flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.buttons2 {
+    display: flex;
+    justify-content: center;
+}
+
+.button {
+    height: 150px;
+    width: 150px;
+    border-style: none;
+    border-color: white;
+    background-color: lightblue;
+    padding: 10px;
+    transition: all 1s ease;
+}
+
+.selected {
+    background-color: darkblue;
+}
+
+/* img:hover {
+    background-color: blue;
+} */
+
+

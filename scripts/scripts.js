@@ -2,6 +2,12 @@
 // 2 = paper
 // 3 = scissors
 
+let playerScore = 0
+let computerScore = 0
+
+const score = document.querySelector('h2');
+const result = document.querySelector('h3');
+
 function computerPlay() {
     number = Math.floor(Math.random()*3+1);
     if (number == 1) {return "rock"}
@@ -9,43 +15,62 @@ function computerPlay() {
     else {return "scissors"}
 }
 
-function playRound() {
-    playerSelection = prompt("Enter rock, paper or scissors").toLowerCase();
+function updateScore(roundResult) {
+    if (roundResult == "player") {
+        playerScore++;
+        score.textContent = "PLAYER : "+playerScore+"    COMPUTER : "+computerScore;
+        result.textContent = "Player wins the round"
+    }
+    else if (roundResult == "computer") {
+        computerScore++;
+        score.textContent = "PLAYER : "+playerScore+"    COMPUTER : "+computerScore;
+        result.textContent = "Computer wins the round"
+    }
+}
+function clearSelection() {
+    check = document.querySelector('.selected')
+    if (check != null) {
+        check.classList.remove('selected')
+    }
+}
+
+function updateComputer(computerSelection) {
+    if (computerSelection == 'rock') {
+        document.querySelector('.buttons2 #one').classList.add('selected')
+    }
+    else if (computerSelection == 'paper') {
+        document.querySelector('.buttons2 #two').classList.add('selected')
+    }
+    else if (computerSelection == 'scissors') {
+        document.querySelector('.buttons2 #three').classList.add('selected')
+    }    
+}
+
+function playRound(playerSelection) {
+    clearSelection();
+    clearSelection();
+    document.querySelector(`#${playerSelection}`).classList.add('selected');
     computerSelection = computerPlay();
+    updateComputer(computerSelection);
 
-    console.log(playerSelection)
-    console.log(computerSelection)
-
-    if (playerSelection == computerSelection) {return "tie"}
-    else if (playerSelection == "rock" && computerSelection == "paper") {return "lose"}
-    else if (playerSelection == "rock" && computerSelection == "scissors") {return "win"}
-    else if (playerSelection == "paper" && computerSelection == "rock") {return "win"}
-    else if (playerSelection == "paper" && computerSelection == "scissors") {return "lose"}
-    else if (playerSelection == "scissors" && computerSelection == "rock") {return "lose"}
-    else if (playerSelection == "scissors" && computerSelection == "paper") {return "win"}
-    else {return "unknown error"}
+    if (playerSelection == computerSelection) {result.textContent = "It was a tie"}
+    else if (playerSelection == "rock" && computerSelection == "paper") {updateScore('computer')}
+    else if (playerSelection == "rock" && computerSelection == "scissors") {updateScore('player')}
+    else if (playerSelection == "paper" && computerSelection == "rock") {updateScore('player')}
+    else if (playerSelection == "paper" && computerSelection == "scissors") {updateScore('computer')}
+    else if (playerSelection == "scissors" && computerSelection == "rock") {updateScore('computer')}
+    else if (playerSelection == "scissors" && computerSelection == "paper") {updateScore('player')}
+    else {alert("unknown error")}
 }
 
 function game() {
-    let playerScore = 0
-    let computerScore = 0
+    
+    score.textContent = "The score is, player: "+playerScore+" computer: "+computerScore;
 
-    while (playerScore != 5 && computerScore !=5){
-        result = playRound()
-        if (result == "win") {
-            playerScore++
-            console.log("Player win.")
-        }
-        else if (result == "lose") {
-            computerScore++
-            console.log("Player lose.")
-        }
-        else if (result == "tie") {
-            console.log("It is a tie.")
-        }
-        
-        console.log("The score is, player: "+playerScore+" computer: "+computerScore)
+    if (playerScore == 5) {
+        score.textContent = "GAME OVER PLAYER WINS"
     }
-
-    console.log("The game has ended.")
+    else if (computerScore == 5) {
+        score.textContent = "GAME OVER COMPUTER WINS"
+    }
 }
