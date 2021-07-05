@@ -15,16 +15,44 @@ function computerPlay() {
     else {return "scissors"}
 }
 
+function resetGame() {
+    playagain = document.querySelector('.header img');
+    playagain.src = "";
+    playerScore = 0;
+    computerScore = 0;
+    score.textContent = "PLAYER : "+playerScore+"    COMPUTER : "+computerScore;
+    result.textContent = "The game has been reset."
+}
+
+function playAgainButton() {
+    playagain = document.querySelector('.header img');
+    playagain.src = "/images/playagain.png";
+}
+
 function updateScore(roundResult) {
     if (roundResult == "player") {
         playerScore++;
-        score.textContent = "PLAYER : "+playerScore+"    COMPUTER : "+computerScore;
-        result.textContent = "Player wins the round"
+        if (playerScore == 5) {
+            score.textContent = "PLAYER : "+playerScore+"    COMPUTER : "+computerScore;
+            result.textContent = "GAME OVER. Player has won."
+            playAgainButton();
+        }
+        else {
+            score.textContent = "PLAYER : "+playerScore+"    COMPUTER : "+computerScore;
+            result.textContent = "Player wins the round"
+        }
     }
     else if (roundResult == "computer") {
         computerScore++;
-        score.textContent = "PLAYER : "+playerScore+"    COMPUTER : "+computerScore;
-        result.textContent = "Computer wins the round"
+        if (computerScore == 5) {
+            score.textContent = "PLAYER : "+playerScore+"    COMPUTER : "+computerScore;
+            result.textContent = "GAME OVER. Computer has won."
+            playAgainButton();
+        }
+        else {
+            score.textContent = "PLAYER : "+playerScore+"    COMPUTER : "+computerScore;
+            result.textContent = "Computer wins the round"
+        } 
     }
 }
 function clearSelection() {
@@ -53,7 +81,10 @@ function playRound(playerSelection) {
     computerSelection = computerPlay();
     updateComputer(computerSelection);
 
-    if (playerSelection == computerSelection) {result.textContent = "It was a tie"}
+    if (playerScore == 5 || computerScore === 5) {
+        alert("click PLAY AGAIN to start a new game.")
+    }
+    else if (playerSelection == computerSelection) {result.textContent = "It was a tie"}
     else if (playerSelection == "rock" && computerSelection == "paper") {updateScore('computer')}
     else if (playerSelection == "rock" && computerSelection == "scissors") {updateScore('player')}
     else if (playerSelection == "paper" && computerSelection == "rock") {updateScore('player')}
@@ -61,16 +92,4 @@ function playRound(playerSelection) {
     else if (playerSelection == "scissors" && computerSelection == "rock") {updateScore('computer')}
     else if (playerSelection == "scissors" && computerSelection == "paper") {updateScore('player')}
     else {alert("unknown error")}
-}
-
-function game() {
-    
-    score.textContent = "The score is, player: "+playerScore+" computer: "+computerScore;
-
-    if (playerScore == 5) {
-        score.textContent = "GAME OVER PLAYER WINS"
-    }
-    else if (computerScore == 5) {
-        score.textContent = "GAME OVER COMPUTER WINS"
-    }
 }

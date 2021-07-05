@@ -28,8 +28,7 @@
     background-color: darkblue;
 }
 
-/* img:hover {
-    background-color: blue;
-} */
-
-
+.playAgain {
+    width: 150px;
+    align-self: center;
+}
